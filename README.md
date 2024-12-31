@@ -5,7 +5,7 @@ A full-stack web application that helps you track your finances. You can **add**
 ![image](https://github.com/user-attachments/assets/142b8140-82aa-42b9-ac8c-79775525163a)
 
 ## Demo Video 🎥
-(https://drive.google.com/file/d/1VYM9VANXV0ReufDB1OLlTsnUZbsBd1pO/view?usp=sharing)
+https://drive.google.com/file/d/1X-ogiv5AYQ74rx8-OBGcf8RMJCP9EnCs/view?usp=sharing
 
 ## Features 🛠️
 - **Add Transaction**: Add income and expense records with details like amount, category, and date.
