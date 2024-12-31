@@ -2,6 +2,9 @@
 
 A full-stack web application that helps you track your finances. You can **add**, **edit**, and **delete** transactions to manage both **income** and **expense** records. The app is **responsive**, so it works smoothly on both **desktop** and **mobile** devices. Built with **HTML**, **CSS**, **JavaScript**, **Bootstrap**, **MySQL**, and **PHP**.
 
+## Demo Video 🎥
+https://drive.google.com/file/d/14FXeFvcZNJJW2K6ScU7qHICKpwO3kAYf/view?usp=sharing
+
 ## Features 🛠️
 - **Add Transaction**: Add income and expense records with details like amount, category, and date.
 - **Edit Transaction**: Edit existing transactions as needed.
@@ -41,7 +44,6 @@ A full-stack web application that helps you track your finances. You can **add**
    - **Password**: `user`
 4. You can now add, edit, or delete transactions and track your finances.
 
-## Demo Video 🎥
-[Link to the execution video]
+
 
 
