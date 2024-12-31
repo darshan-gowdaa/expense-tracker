@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Expense Tracker</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Custom Styles */
+    body {
+      background: linear-gradient(135deg, #2c3e50, #34495e) !important;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card {
+      border-radius: 15px !important;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3) !important;
+      transition: transform 0.3s ease !important;
+      background-color: #3b4a5c !important;
+      border: 1px solid #2c3e50 !important;
+      width: 90% !important;
+    }
+
+    .btn-dark {
+      background-color: #1a1a1a !important;
+      border: none !important;
+      transition: background-color 0.3s ease !important;
+    }
+
+    .btn-dark:hover {
+      background-color: #000000 !important;
+    }
+
+    .form-control {
+      border-radius: 8px !important;
+      border: 1px solid #525456 !important;
+      transition: border-color 0.3s ease !important;
+      background-color: #95999ed8 !important;
+      color: #ffffff !important;
+    }
+
+    .form-control:focus {
+      border-color: #1a1a1a !important;
+      box-shadow: 0 0 0 0.2rem rgba(26, 26, 26, 0.25) !important;
+    }
+
+    h1 {
+      color: #ffffff !important;
+      font-weight: bold !important;
+    }
+
+    .form-label {
+      font-weight: 500 !important;
+      color: #ffffff !important;
+    }
+
+    .card-body {
+      color: #ffffff !important;
+    }
+
+    .alert,
+    #alert {
+      position: fixed !important;
+      top: 0 !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      z-index: 1050 !important;
+      width: auto !important;
+      margin-top: 8px !important;
+      padding: 10px 20px !important;
+      max-width: 90% !important;
+      border: 1px solid #ccc !important;
+    }
+
+    input {
+      background-color: #ccc !important;
+    }
+  </style>
+</head>
+
+<body class="bg-light">
+
+  <div class="container py-5 w-auto">
+    <h1 class="text-center mb-4">Login to Expense Tracker</h1>
+    <div class="card border-secondary">
+      <div class="card-body">
+        <form id="loginForm" action="http://localhost/expense-tracker/backend/login.php" method="POST">
+          <div class="mb-3">
+            <label for="loginEmail" class="form-label">Email address</label>
+            <input type="email" class="form-control border-secondary" id="loginEmail" name="email"
+              placeholder="Enter your email" required>
+          </div>
+          <div class="mb-3">
+            <label for="loginPassword" class="form-label">Password</label>
+            <input type="password" class="form-control border-secondary" id="loginPassword" name="password"
+              placeholder="Enter your password" required>
+          </div>
+          <button type="submit" class="btn btn-dark w-100">Login</button>
+        </form>
+
+        <!-- Alerts -->
+        <div id="alertContainer"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Function to get URL parameters
+    function getURLParameter(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    // Check for login success or error in URL
+    window.onload = function () {
+      const alertContainer = document.getElementById('alertContainer');
+
+      // Show success alert
+      if (getURLParameter('login_success') === 'success') {
+        alertContainer.innerHTML = `
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            Login Successfull!, Redirecting to the main page...
+          </div>
+        `;
+        setTimeout(() => {
+          window.location.href = "../frontend/index.html"; // Redirect after 2 seconds
+        }, 1800);
+      }
+
+      // Show error alert
+      if (getURLParameter('login_error') === 'Invalid credentials') {
+        alertContainer.innerHTML = `
+          <div id="alert" class="alert alert-danger alert-dismissible fade show" role="alert">
+            Incorrect credentials, try again.
+          </div>
+        `;
+        setTimeout(() => {
+          alertContainer.innerHTML = ''; // Clear alert after 2 seconds
+        }, 5000);
+      }
+    }
+  </script>
+
+</body>
+
+</html>

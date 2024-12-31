@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+.body {
+    background-image: url(bg2.jpg) !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    font-family: Lato, sans-serif !important;
+}
+
+.card {
+    background-color: rgba(177, 177, 177, 0.3) !important;
+    color: rgb(233, 230, 226) !important;
+    border-radius: 8px !important;
+    backdrop-filter: blur(8px) !important;
+}
+
+table {
+    background-color: rgba(255, 255, 255, 0.3) !important;
+    backdrop-filter: blur(8px) !important;
+    border-collapse: collapse !important;
+}
+
+th, td {
+    background-color: rgba(89, 84, 84, 0.5) !important;
+    color: rgba(255, 255, 255, 0.941) !important;
+    border: 1px solid rgba(204, 204, 204, 0.5) !important;
+    backdrop-filter: blur(5px) !important;
+}
+
+.c1 {
+    background-color: rgba(200, 200, 200, 0.4) !important;
+    color: rgb(233, 230, 226) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
+    transition: transform 0.2s !important;
+    backdrop-filter: blur(10px) !important;
+}
+
+.c1:hover {
+    transform: scale(1.02) !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2) !important;
+}
+
+.card-header {
+    background-color: rgba(8, 8, 37, 0.7) !important;
+    color: #c6c6c6 !important;
+    border-radius: 8px 8px 0 0 !important;
+    backdrop-filter: blur(10px) !important;
+}
+
+#alert {
+    position: fixed !important;
+    top: 0 !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    z-index: 1050 !important;
+    width: auto !important;
+    margin-top: 8px !important;
+    padding: 10px 20px !important;
+    max-width: 90% !important;
+    border: 1px solid #ccc !important;
+}
+
+#addButton, #saveButton .btn-check {
+    background-color: rgba(8, 8, 37, 0.7) !important;
+    color: #c6c6c6 !important;
+    border: none !important;
+}
+
+#addButton:hover, #saveButton:hover {
+    background-color: rgba(8, 8, 37, 0.9) !important;
+}
+
+#expenseForm input {
+    background: rgba(240, 240, 240, 0.3) !important;
+    border: 1px solid rgba(204, 204, 204, 0.7) !important;
+    backdrop-filter: blur(5px) !important;
+}
+
+@media (max-width: 768px) {
+    .btn-sm {
+        font-size: 14px !important;
+        padding: 5px 10px !important;
+    }
+
+    .table-responsive {
+        overflow-x: auto !important;
+    }
+
+    .card-body {
+        padding: 10px !important;
+    }
+
+    .card-title {
+        font-size: 18px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .btn-sm {
+        padding: 3px 8px !important;
+        font-size: 12px !important;
+    }
+}

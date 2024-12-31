@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="body bg-secondary">
+    <?php session_start(); ?> <!-- Ensure session starts here, before any HTML content -->
+
+    <!-- Hidden input to store user_id -->
+    <!-- Hidden input field for user_id -->
+    <input type="hidden" id="user_id" value="<?php echo $_SESSION['user_id']; ?>" />
+
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand ms-5" href="#">
+                Expense Tracker
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#e8eaed">
+                    <path
+                        d="M260-361v-40H160v-80h200v-80H200q-17 0-28.5-11.5T160-601v-160q0-17 11.5-28.5T200-801h60v-40h80v40h100v80H240v80h160q17 0 28.5 11.5T440-601v160q0 17-11.5 28.5T400-401h-60v40h-80Zm298 240L388-291l56-56 114 114 226-226 56 56-282 282Z" />
+                </svg>
+            </a>
+        </div>
+    </nav>
+
+    <main class="mt-5">
+        <div class="container my-4">
+            <div class="row">
+                <!-- Add Transaction Card -->
+                <div class="col-12 col-md-4 mb-4">
+                    <div class="card">
+                        <div class="container card-header text-center bg-dark text-white">
+                            <h4 class="mt-1">Add Transaction</h4>
+                        </div>
+                        <div class="card-body">
+                            <form id="expenseForm" class="container">
+                                <div class="mb-3">
+                                    <label for="date" class="form-label">Date</label>
+                                    <input type="date" class="form-control border-secondary" id="date" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">Description</label>
+                                    <input type="text" class="form-control border-secondary" id="description" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="amount" class="form-label">Amount (₹)</label>
+                                    <input type="number" class="form-control border-secondary" id="amount" required>
+                                </div>
+                                <div class="mb-3 mt-1">
+                                    <label class="form-label mx-1 mt-2">Type: </label>
+                                    <div class="btn-group mt-1" role="group" aria-label="Transaction Type">
+                                        <input type="radio" class="btn-check" name="type" id="expense" value="expense"
+                                            checked>
+                                        <label class="ms-1 btn btn-outline-dark" for="expense">Expense</label>
+
+                                        <input type="radio" class="btn-check" name="type" id="income" value="income">
+                                        <label class="btn btn-outline-dark" for="income">Income</label>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-center p-2">
+                                    <button type="button"
+                                        class="btn btn-dark w-75 p-2 hover-text d-flex align-items-center justify-content-center"
+                                        id="addButton" onclick="addTransaction()">Save Transaction</button>
+                                    <button type="button"
+                                        class="btn btn-dark w-75 p-2 hover-text d-flex align-items-center justify-content-center d-none"
+                                        id="saveButton" onclick="saveEditedTransaction()">Save Changes</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cards Row -->
+                <div class="col-12 col-md-8">
+                    <div class="row">
+                        <!-- Card 1 -->
+                        <div class="col-12 col-md-4 mb-4 ">
+                            <div class="card c1">
+                                <div class="card-body">
+                                    <h5 class="card-subtitle  p-1 mt-1">Current Balance</h5>
+                                    <h1 class="card-title mb-2 text-center text-dark-emphasis me-4 p-4"
+                                        id="totalAmountCard">₹0</h1>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 2 -->
+                        <div class="col-12 col-md-4 mb-4 ">
+                            <div class="card c1">
+                                <div class="card-body">
+                                    <h5 class="card-subtitle p-1 mt-1">Total Income</h5>
+                                    <h1 class="card-title mb-2 text-center fw-bolder text-success me-4 p-4"
+                                        id="totalIncomeCard">₹<span id="totalIncome">0</span></h1>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 3 -->
+                        <div class="col-12 col-md-4 mb-4 ">
+                            <div class="card c1">
+                                <div class="card-body">
+                                    <h5 class="card-subtitle p-1 mt-1">Total Expenses</h5>
+                                    <h1 class="card-title mb-2 text-center text-danger-emphasis me-4 p-4"
+                                        id="totalExpensesCard">₹<span id="totalExpenses">0</span></h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Transaction History Section -->
+                    <div class="mt-2">
+                        <div class="card">
+                            <div class="card-header bg-dark text-white text-center">
+                                <h4 class="mt-1">Transaction History</h4>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-light table-bordered">
+                                    <thead class=" ">
+                                        <tr>
+                                            <th class="w-auto text-bg-secondary text-opacity-75">Date</th>
+                                            <th class="w-50 text-bg-secondary text-opacity-75">Description</th>
+                                            <th class="text-bg-secondary text-opacity-75">Amount</th>
+                                            <th class="text-bg-secondary text-opacity-75">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="expenseTable">
+                                        <!-- Dynamic rows will be added here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Alert Message -->
+    <div id="emptyTable" class="d-flex align-items-center justify-content-center">
+        <div id="alert" class="alert alert-danger d-none text-center rounded w-25" role="alert"></div>
+    </div>
+
+    <script>
+        // Ensure session start and user_id is retrieved properly
+        const user_id = <? php echo isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 'null'; ?>;
+
+        if (user_id === null) {
+            alert('Please log in to access your transactions');
+            window.location.href = 'login.php';  // Redirect to login page if not logged in
+        }
+
+        function editTransaction(transactionId) {
+            fetch(`get_transactions.php?id=${transactionId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Populate the form with the data
+                        document.getElementById("date").value = data.transaction.date;
+                        document.getElementById("description").value = data.transaction.description;
+                        document.getElementById("amount").value = data.transaction.amount;
+                        document.getElementById(data.transaction.type).checked = true;
+
+                        // Show the "Save Changes" button and hide the "Save Transaction" button
+                        document.getElementById("addButton").classList.add("d-none");
+                        document.getElementById("saveButton").classList.remove("d-none");
+
+                        // Store transaction ID for editing
+                        document.getElementById("saveButton").onclick = function () {
+                            saveEditedTransaction(transactionId);
+                        };
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching transaction details:", error);
+                });
+        }
+
+        function saveEditedTransaction(transactionId) {
+            const formData = {
+                id: transactionId,
+                date: document.getElementById("date").value,
+                description: document.getElementById("description").value,
+                amount: document.getElementById("amount").value,
+                type: document.querySelector('input[name="type"]:checked').value
+            };
+
+            fetch('edit_transactions.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("Transaction updated successfully.");
+                        location.reload(); // Reload the page to see the changes
+                    } else {
+                        alert("Error updating transaction.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error saving transaction:", error);
+                });
+        }
+    </script>
+
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
