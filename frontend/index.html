@@ -10,13 +10,17 @@
 </head>
 
 <body class="body bg-secondary">
-    <?php session_start(); ?> <!-- Ensure session starts here, before any HTML content -->
+    <div id="video-wrapper">
+        <video autoplay muted loop id="bg-video">
+            <source src="vecteezy_coins-stack-increase-with-business-data-hologram-business_5380373.mp4"
+                type="video/mp4">
+        </video>
+    </div>
+    <?php session_start(); ?>
 
     <!-- Hidden input to store user_id -->
     <!-- Hidden input field for user_id -->
     <input type="hidden" id="user_id" value="<?php echo $_SESSION['user_id']; ?>" />
-
-
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
@@ -147,72 +151,6 @@
     <div id="emptyTable" class="d-flex align-items-center justify-content-center">
         <div id="alert" class="alert alert-danger d-none text-center rounded w-25" role="alert"></div>
     </div>
-
-    <script>
-        // Ensure session start and user_id is retrieved properly
-        const user_id = <? php echo isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 'null'; ?>;
-
-        if (user_id === null) {
-            alert('Please log in to access your transactions');
-            window.location.href = 'login.php';  // Redirect to login page if not logged in
-        }
-
-        function editTransaction(transactionId) {
-            fetch(`get_transactions.php?id=${transactionId}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Populate the form with the data
-                        document.getElementById("date").value = data.transaction.date;
-                        document.getElementById("description").value = data.transaction.description;
-                        document.getElementById("amount").value = data.transaction.amount;
-                        document.getElementById(data.transaction.type).checked = true;
-
-                        // Show the "Save Changes" button and hide the "Save Transaction" button
-                        document.getElementById("addButton").classList.add("d-none");
-                        document.getElementById("saveButton").classList.remove("d-none");
-
-                        // Store transaction ID for editing
-                        document.getElementById("saveButton").onclick = function () {
-                            saveEditedTransaction(transactionId);
-                        };
-                    }
-                })
-                .catch(error => {
-                    console.error("Error fetching transaction details:", error);
-                });
-        }
-
-        function saveEditedTransaction(transactionId) {
-            const formData = {
-                id: transactionId,
-                date: document.getElementById("date").value,
-                description: document.getElementById("description").value,
-                amount: document.getElementById("amount").value,
-                type: document.querySelector('input[name="type"]:checked').value
-            };
-
-            fetch('edit_transactions.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert("Transaction updated successfully.");
-                        location.reload(); // Reload the page to see the changes
-                    } else {
-                        alert("Error updating transaction.");
-                    }
-                })
-                .catch(error => {
-                    console.error("Error saving transaction:", error);
-                });
-        }
-    </script>
 
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
